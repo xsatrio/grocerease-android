@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/homeFragment"
+    android:id="@+id/intro_nav">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.exal.grocerease.view.fragment.HomeFragment"
+        android:label="@string/fragment_home"
+        tools:layout="@layout/fragment_home" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/expensesFragment"
+        android:name="com.exal.grocerease.view.fragment.ExpensesFragment"
+        android:label="@string/fragment_expenses"
+        tools:layout="@layout/fragment_expenses" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/planFragment"
+        android:name="com.exal.grocerease.view.fragment.PlanFragment"
+        android:label="@string/fragment_plan"
+        tools:layout="@layout/fragment_plan" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.exal.grocerease.view.fragment.ProfileFragment"
+        android:label="@string/fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+    </fragment>
+
+</navigation>

@@ -1,0 +1,17 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.GrocerEase" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your dark theme here. -->
+        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/BlueLight</item>
+        <item name="colorOnPrimary">@color/gray</item>
+        <item name="colorSecondary">@color/BlueLight</item>
+        <item name="colorOnSecondary">@color/gray</item>
+        <item name="android:statusBarColor">@color/grayLight</item>
+        <item name="android:navigationBarColor">@color/gray</item>
+    </style>
+    
+    <style name="Theme.GrocerEase.Icon" parent="Base.Theme.GrocerEase">
+        <item name="icon">@color/white</item>
+    </style>
+</resources>
