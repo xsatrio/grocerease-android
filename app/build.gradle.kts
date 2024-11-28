@@ -1,11 +1,22 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
     namespace = "com.exal.grocerease"
     compileSdk = 34
+
+    splits {
+        abi {
+            isEnable = true
+            reset()
+            include("x86", "x86_64", "armeabi", "armeabi-v7a", "mips", "mips64", "arm64-v8a")
+            isUniversalApk = false
+        }
+    }
 
     defaultConfig {
         applicationId = "com.exal.grocerease"
@@ -55,7 +66,6 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-
     implementation(libs.androidx.ui.android)
     implementation(libs.androidx.animation.core.android)
     implementation(libs.androidx.navigation.fragment.ktx)
@@ -84,4 +94,13 @@ dependencies {
 
     // OpenCV lib
     implementation("com.quickbirdstudios:opencv-contrib:4.5.3.0")
+
+    // Retrofit2 lib
+    implementation(libs.retrofit)
+    implementation(libs.logging.interceptor)
+    implementation(libs.converter.gson)
+
+    // Hilt lib
+    ksp(libs.hilt.android.compiler)
+    implementation(libs.hilt.android)
 }

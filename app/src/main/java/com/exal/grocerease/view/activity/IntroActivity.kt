@@ -6,12 +6,24 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.exal.grocerease.R
+import com.exal.grocerease.helper.manager.IntroManager
 import com.github.appintro.AppIntroCustomLayoutFragment.Companion.newInstance
 import com.github.appintro.AppIntro
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class IntroActivity : AppIntro() {
+    @Inject
+    lateinit var introManager: IntroManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+//        if (introManager.isIntroCompleted()) {
+//            navigateToLanding()
+//            return
+//        }
 
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
@@ -41,6 +53,12 @@ class IntroActivity : AppIntro() {
         }
     }
 
+    private fun navigateToLanding() {
+        val intent = Intent(this, LandingActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
     private fun isDarkMode(): Boolean {
         return when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> true
@@ -51,6 +69,7 @@ class IntroActivity : AppIntro() {
 
     public override fun onSkipPressed(currentFragment: Fragment?) {
         super.onSkipPressed(currentFragment)
+        introManager.setIntroCompleted()
         val intent = Intent(this, LandingActivity::class.java)
         startActivity(intent)
         finish()
@@ -58,6 +77,7 @@ class IntroActivity : AppIntro() {
 
     public override fun onDonePressed(currentFragment: Fragment?) {
         super.onDonePressed(currentFragment)
+        introManager.setIntroCompleted()
         val intent = Intent(this, LandingActivity::class.java)
         startActivity(intent)
         finish()

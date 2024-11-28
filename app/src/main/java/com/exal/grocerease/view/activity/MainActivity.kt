@@ -1,6 +1,8 @@
 package com.exal.grocerease.view.activity
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.PopupMenu
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -10,14 +12,39 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.exal.grocerease.R
 import com.exal.grocerease.databinding.ActivityMainBinding
+import com.exal.grocerease.helper.manager.IntroManager
+import com.exal.grocerease.helper.manager.TokenManager
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
+    @Inject
+    lateinit var tokenManager: TokenManager
+
+    @Inject
+    lateinit var introManager: IntroManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+
+        if (!introManager.isIntroCompleted()) {
+            val introValue = !introManager.isIntroCompleted()
+            Log.d("MainActivity", "Intro not completed, starting IntroActivity $introValue")
+            redirectToIntroActivity()
+            return
+        }
+
+        if (!isUserLoggedIn()) {
+            Log.d("IntroManager", "User not logged in, redirecting to LandingActivity")
+            redirectToLandingActivity()
+            return
+        }
+
         enableEdgeToEdge()
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -30,6 +57,22 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.container) as NavHostFragment
         navController = navHostFragment.navController
         setupSmoothBottomMenu()
+    }
+
+    private fun isUserLoggedIn(): Boolean {
+        return tokenManager.isLoggedIn()
+    }
+
+    private fun redirectToIntroActivity() {
+        val intent = Intent(this, IntroActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun redirectToLandingActivity() {
+        val intent = Intent(this, LandingActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun setupSmoothBottomMenu() {
