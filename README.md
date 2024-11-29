@@ -1,1 +1,1 @@
-## Grocer Ease
+## GrocerEase Android App
